@@ -32,7 +32,16 @@ var getConcert = function(artist){
 axios.get(queryURL)
   .then(function (response) {
     // handle success
-    console.log(response.data);
+    var data = response.data; 
+    var venue = data[0].venue;
+    // Name of the venue
+    var venueName = venue.name;
+    // Venue location
+    var venueLocation = venue.city + ", " +  venue.region + ", " + venue.country; 
+    // Date of the Event (use moment to format this as "MM/DD/YYYY")
+    var venueTime = data.datetime;
+    var venueMoment = moment(venueTime).format("MM/DD/YYYY");
+    console.log("This is the Concerts comming up:" + venueName + " " + venueLocation + " " + venueMoment + "." );
   })
   .catch(function (error) {
     // handle error
@@ -42,9 +51,7 @@ axios.get(queryURL)
 
 getConcert (process.argv.slice(2).join(" "));
    
-    // Name of the venue
-    // Venue location
-    // Date of the Event (use moment to format this as "MM/DD/YYYY")
+
 
 // spotify-this-song
     // node liri.js spotify-this-song '<song name here>'
