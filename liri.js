@@ -21,7 +21,7 @@ var moment = require('moment');
 var spotify = new Spotify(keys.spotify);
 
 // Make it so liri.js can take in one of the following commands:
-// concert-this
+// concert-this-------------------------------
 
 // node liri.js concert-this <artist/band name here>.......
  // This will search the Bands in Town Artist Events API 
@@ -55,18 +55,40 @@ axios.get(queryURL)
   })
 }
 
-getConcert (process.argv.slice(2).join(" "));
+//used to test the getConcert function...
+//getConcert (process.argv.slice(2).join(" "));
    
-
+//----------------------------------------------------------
 
 // spotify-this-song
-    // node liri.js spotify-this-song '<song name here>'
+    // node liri.js spotify-this-song '<song name here>' ------------------------------------------------------
     // This will show the following information about the song in your terminal/bash window
+    var spotifyASong = function(nameOfTheSong){
+
+     spotify.search({ type: 'track', query: nameOfTheSong })
+    .then(function(response) {
+      console.log(response);
         // Artist(s)
         // The song's name
         // A preview link of the song from Spotify
         // The album that the song is from
         //If no song is provided then your program will default to "The Sign" by Ace of Base.
+
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+
+}
+
+spotifyASong(process.argv.slice(2).join(" "));
+
+        
+
+
+
+
+
 
 // movie-this
     // This will output the following information to your terminal/bash window:
