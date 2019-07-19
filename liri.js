@@ -33,15 +33,21 @@ axios.get(queryURL)
   .then(function (response) {
     // handle success
     var data = response.data; 
-    var venue = data[0].venue;
+    console.log ("\n------------------------------------------------------\n There is " + data.length + " concerts coming up! \n");
+    //lets print every result inside data array....
+    for (var concertResponses = 0; concertResponses < data.length; concertResponses ++ ){
+    var venue = data[concertResponses].venue;
     // Name of the venue
     var venueName = venue.name;
     // Venue location
     var venueLocation = venue.city + ", " +  venue.region + ", " + venue.country; 
     // Date of the Event (use moment to format this as "MM/DD/YYYY")
-    var venueTime = data.datetime;
+    var venueTime = data[concertResponses].datetime;
     var venueMoment = moment(venueTime).format("MM/DD/YYYY");
-    console.log("This is the Concerts comming up:" + venueName + " " + venueLocation + " " + venueMoment + "." );
+    console.log("Venue: " + venueName + "\n Location: " + venueLocation + "\n Time: " + venueMoment + ". \n" );
+    }
+
+    console.log("\n---------------------------------------------------------\n")
   })
   .catch(function (error) {
     // handle error
