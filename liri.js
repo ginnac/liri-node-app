@@ -32,7 +32,7 @@ var getConcert = function(artist){
 axios.get(queryURL)
   .then(function (response) {
     // handle success
-    console.log(response);
+    console.log(response.data);
   })
   .catch(function (error) {
     // handle error
@@ -40,7 +40,7 @@ axios.get(queryURL)
   })
 }
 
-getConcert (artist);
+getConcert (process.argv.slice(2).join(" "));
    
     // Name of the venue
     // Venue location
