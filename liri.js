@@ -39,6 +39,8 @@ axios.get(queryURL)
     console.log(error);
   })
 }
+
+getConcert (artist);
    
     // Name of the venue
     // Venue location
