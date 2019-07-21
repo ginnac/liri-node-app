@@ -38,12 +38,12 @@ Technologies applied: Node.js
 
 *(The first option will render results with the "despacito, the second will default to "the sign").*
 
-![concert-this](images\concert-this.PNG)
-![do-what-it-says](images\do-what-it-says.PNG)
-![movie-this](images\movie-this-oneargument.PNG)
-![movie-this](images\movie-this.PNG)
-![spotify-this-song](images\spotify-this-song-oneargument.PNG)
-![spotify-this-song](images\spotify-this-song.PNG)
+![concert-this](images/concert-this.PNG)
+![do-what-it-says](images/do-what-it-says.PNG)
+![movie-this](images/movie-this-oneargument.PNG)
+![movie-this](images/movie-this.PNG)
+![spotify-this-song](images/spotify-this-song-oneargument.PNG)
+![spotify-this-song](images/spotify-this-song.PNG)
 
 
 
