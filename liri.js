@@ -66,7 +66,7 @@ axios.get(queryURL)
     // This will show the following information about the song in your terminal/bash window
     var spotifyASong = function(nameOfTheSong){
             //If no song is provided then your program will default to "The Sign" by Ace of Base.
-        if(nameOfTheSong === undefined || nameOfTheSong ===" "){
+        if(nameOfTheSong === undefined || nameOfTheSong === ""){
             nameOfTheSong = "the sign";
         }
      spotify.search({ type: 'track', query: nameOfTheSong })
@@ -145,19 +145,36 @@ axios.get(queryURL)
 // do-what-it-says
 
     // Using the fs Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
-
-
     // It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
     // Edit the text in random.txt to test out the feature for movie-this and concert-this.
 
+    var doWhatItSays = function(){
+
+        fs.readFile('random.txt', "utf8", (err, data) => {
+          if (err) throw err;
+            console.log(data);
+            var todoArray = data.split(",");
+            console.log(todoArray.length);
+
+            if(todoArray.length===2){
+              runningCommands(todoArray[0],todoArray[1])
+            }
+            else if(todoArray.length === 1){
+              runningCommands(todoArray[0], "")
+            }
+
+
+          });
+
+
+    }
 
 
 // switch so we can take the user input (process.argv[2] === function to run; process.argv[3] = parameter for such function)...
-var  commandOne = process.argv[2]; 
+var commandOne;
+var commandTwo;
 
-var commandTwo= process.argv.slice(3).join(" ");
-
-
+var runningCommands = function(commandOne,commandTwo){
 switch(commandOne) {
     case "concert-this":
       // code block
@@ -169,10 +186,15 @@ switch(commandOne) {
       break;
     case "movie-this":
         // code block
-    movieThis(commandTwo);
+        movieThis(commandTwo);
+        break;
+    case "do-what-it-says":
+            // code block
+        doWhatItSays();
         break;
     default:
       // code block
   }
+}
 
-
+runningCommands(process.argv[2], process.argv.slice(3).join(" "));
