@@ -138,7 +138,9 @@ axios.get(queryURL)
       })
     }
 
-    movieThis(process.argv.slice(2).join(" "));
+    //testing movieThis function
+    //movieThis(process.argv.slice(2).join(" "));
+
 
 // do-what-it-says
 
@@ -150,6 +152,27 @@ axios.get(queryURL)
 
 
 
+// switch so we can take the user input (process.argv[2] === function to run; process.argv[3] = parameter for such function)...
+var  commandOne = process.argv[2]; 
 
+var commandTwo= process.argv.slice(3).join(" ");
+
+
+switch(commandOne) {
+    case "concert-this":
+      // code block
+      getConcert(commandTwo);
+      break;
+    case "spotify-this-song":
+      // code block
+      spotifyASong(commandTwo);
+      break;
+    case "movie-this":
+        // code block
+    movieThis(commandTwo);
+        break;
+    default:
+      // code block
+  }
 
 
