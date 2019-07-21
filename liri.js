@@ -21,6 +21,7 @@ var moment = require('moment');
 var spotify = new Spotify(keys.spotify);
 
 
+
 // Make it so liri.js can take in one of the following commands:
 // concert-this-------------------------------
 
@@ -35,6 +36,7 @@ axios.get(queryURL)
     // handle success
     var data = response.data; 
     console.log ("\n------------------------------------------------------\n There is " + data.length + " concerts coming up! \n");
+    var finalData = [];
     //lets print every result inside data array....
     for (var concertResponses = 0; concertResponses < data.length; concertResponses ++ ){
     var venue = data[concertResponses].venue;
@@ -45,10 +47,16 @@ axios.get(queryURL)
     // Date of the Event (use moment to format this as "MM/DD/YYYY")
     var venueTime = data[concertResponses].datetime;
     var venueMoment = moment(venueTime).format("MM/DD/YYYY");
-    console.log("Venue: " + venueName + "\n Location: " + venueLocation + "\n Time: " + venueMoment + ". \n" );
+    
+    finalData.push("Venue: " + venueName + "\n Location: " + venueLocation + "\n Time: " + venueMoment + 
+    ". \n\n---------------------------------------------------------\n")
+    console.log("\n\nVenue: " + venueName + "\n Location: " + venueLocation + "\n Time: " + venueMoment + 
+    ". \n");
+
     }
 
-    console.log("\n---------------------------------------------------------\n")
+    console.log("\n\n---------------------------------------------------------\n")
+    appendToLog(JSON.stringify(finalData));
   })
   .catch(function (error) {
     // handle error
@@ -71,7 +79,8 @@ axios.get(queryURL)
         }
      spotify.search({ type: 'track', query: nameOfTheSong })
     .then(function(response) {
-    
+
+        var finalData = [];
         var items = response.tracks.items;
         var artistsArray=[];
         //If no song is provided then your program will default to "The Sign" by Ace of Base.
@@ -85,15 +94,20 @@ axios.get(queryURL)
                 artistsArray.push(artists[x].name);
             }
             //the artistList array should be an string so we can console the list...
-            var artistsList=artistsArray.slice(0).join(", ")
+            var artistsList=artistsArray.slice(0).join(", ");
+
+            finalData.push("\n\nArtist(s): " + artistsList + "\nSong: " + response.tracks.items[i].name + 
+            "\nLink: " + response.tracks.items[i].external_urls.spotify + 
+            "\nAlbum: " + response.tracks.items[i].album.name + "\n");
             // console logging the: Artist(s), The song's name, A preview link of the song from Spotify, The album that the song is from,
-            console.log( "\n\nArtist(s): " + artistsList + "\nSong: " + response.tracks.items[i].name + 
+            console.log("\n\nArtist(s): " + artistsList + "\nSong: " + response.tracks.items[i].name + 
             "\nLink: " + response.tracks.items[i].external_urls.spotify + 
             "\nAlbum: " + response.tracks.items[i].album.name + "\n" );
             
             //emptying array so we can use it in next item from items array...
             artistsArray = [];
         }
+        appendToLog(JSON.stringify(finalData));
     })
     .catch(function(err) {
       console.log(err);
@@ -124,12 +138,18 @@ axios.get(queryURL)
       .then(function (response) {
         // handle success
         var data = response.data; 
-
+        var finalData = [];
         // * Title of the movie, Year the movie came out, IMDB Rating of the movie, Rotten Tomatoes Rating of the movie,
         //Country where the movie was produced, Language of the movie, Plot of the movie, Actors in the movie:
         console.log("\n\nMovie Title: " + data.Title + "\nYear: " + data.Year + "\nRating: " + data.imdbRating + " \nRotten Tomatoes Rating:" +
         data.tomatoeRating + "\nCountry: " + data.Country + "\nLanguage: " + data.Language + "\nPlot: " + data.Plot + "\nActors: " +
         data.Actors + "\n");
+
+        finalData.push("\n\nMovie Title: " + data.Title + "\nYear: " + data.Year + "\nRating: " + data.imdbRating + " \nRotten Tomatoes Rating:" +
+        data.tomatoeRating + "\nCountry: " + data.Country + "\nLanguage: " + data.Language + "\nPlot: " + data.Plot + "\nActors: " +
+        data.Actors + "\n");
+        
+        appendToLog(JSON.stringify(finalData));
         
       })
       .catch(function (error) {
@@ -198,3 +218,16 @@ switch(commandOne) {
 }
 
 runningCommands(process.argv[2], process.argv.slice(3).join(" "));
+
+//Bonus: append data to log.txt everytime you run a command 
+
+var appendToLog = function(finalData){
+
+  fs.appendFile('log.txt', finalData + "\n", (err) => {
+    if (err) throw err;
+    console.log('log.txt has been updated!');
+  });
+
+ 
+
+}
