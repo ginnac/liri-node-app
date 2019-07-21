@@ -66,7 +66,7 @@ axios.get(queryURL)
     // This will show the following information about the song in your terminal/bash window
     var spotifyASong = function(nameOfTheSong){
             //If no song is provided then your program will default to "The Sign" by Ace of Base.
-        if(nameOfTheSong === undefined || " "){
+        if(nameOfTheSong === undefined || nameOfTheSong ===" "){
             nameOfTheSong = "the sign";
         }
      spotify.search({ type: 'track', query: nameOfTheSong })
@@ -112,45 +112,25 @@ axios.get(queryURL)
 
 // movie-this
     // This will output the following information to your terminal/bash window:
-
-    // * Title of the movie.
-    // * Year the movie came out.
-    // * IMDB Rating of the movie.
-    // * Rotten Tomatoes Rating of the movie.
-    // * Country where the movie was produced.
-    // * Language of the movie.
-    // * Plot of the movie.
-    // * Actors in the movie.
-
-
-    // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-    // If you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/
-    // It's on Netflix!
     //You'll use the axios package to retrieve data from the OMDB API. Like all of the in-class activities, the OMDB API requires an API key.
     // You may use trilogy.
-
-
     var movieThis = function(movieTitle){
+    // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+        if (movieTitle === undefined || movieTitle === ""){
+            movieTitle = "Mr Nobody";
+        }
         var queryURL = "http://omdbapi.com/?apikey=trilogy&t=" + movieTitle + "&y=&plot=full&r=json&tomatoes=true";
     axios.get(queryURL)
       .then(function (response) {
         // handle success
         var data = response.data; 
-        console.log (data);
-        // //lets print every result inside data array....
-        // for (var concertResponses = 0; concertResponses < data.length; concertResponses ++ ){
-        // var venue = data[concertResponses].venue;
-        // // Name of the venue
-        // var venueName = venue.name;
-        // // Venue location
-        // var venueLocation = venue.city + ", " +  venue.region + ", " + venue.country; 
-        // // Date of the Event (use moment to format this as "MM/DD/YYYY")
-        // var venueTime = data[concertResponses].datetime;
-        // var venueMoment = moment(venueTime).format("MM/DD/YYYY");
-        // console.log("Venue: " + venueName + "\n Location: " + venueLocation + "\n Time: " + venueMoment + ". \n" );
-        // }
-    
-        // console.log("\n---------------------------------------------------------\n")
+
+        // * Title of the movie, Year the movie came out, IMDB Rating of the movie, Rotten Tomatoes Rating of the movie,
+        //Country where the movie was produced, Language of the movie, Plot of the movie, Actors in the movie:
+        console.log("\n\nMovie Title: " + data.Title + "\nYear: " + data.Year + "\nRating: " + data.imdbRating + " \nRotten Tomatoes Rating:" +
+        data.tomatoeRating + "\nCountry: " + data.Country + "\nLanguage: " + data.Language + "\nPlot: " + data.Plot + "\nActors: " +
+        data.Actors + "\n");
+        
       })
       .catch(function (error) {
         // handle error
